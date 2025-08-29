@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b403c2e0-5666-4d02-bfe6-b745f4144de9" name="Default Changelist" comment="Scapper Project">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mi.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mimobile.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review scapper.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/review scapper.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +144,7 @@
       <workItem from="1756315051347" duration="1717000" />
       <workItem from="1756392283131" duration="1047000" />
       <workItem from="1756393443047" duration="9516000" />
-      <workItem from="1756432845273" duration="10232000" />
+      <workItem from="1756432845273" duration="10829000" />
     </task>
     <task id="LOCAL-00001" summary="demo">
       <option name="closed" value="true" />
