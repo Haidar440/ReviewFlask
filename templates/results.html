@@ -1,45 +1,107 @@
-<!DOCTYPE html>
-<html lang="en" >
+{% extends "base.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <title>Review Page</title>
+{% block title %}Scraped Reviews{% endblock %}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+{% block head %}
+<!-- DataTables CSS -->
+ <!-- DataTables Responsive CSS & JS -->
+
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- DataTables core -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+<!-- JSZip & pdfMake for export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+<!-- DataTables Responsive last (after jQuery & DataTables) -->
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
 
-      <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
 
+{% block body %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-</head>
+  <!-- Page Heading -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+    <h2 class="text-2xl font-bold text-gray-700">Scraped Reviews</h2>
+    <a href="{{ url_for('index') }}"
+       class="bg-sky-600 text-white px-5 py-2 rounded-lg hover:bg-sky-700 transition">
+       ← Back to Search
+    </a>
+  </div>
 
-<body>
-
-  <div class="table-users">
-   <div class="header">Reviews</div>
-
-   <table cellspacing="0">
-      <tr>
-         <th>Product</th>
-         <th>Name</th>
-         <th>Rating</th>
-         <th>Comment Heading</th>
-         <th width="230">Comments</th>
-      </tr>
-         {% for review in reviews %}
-      <tr>
-          <td>{{review['Product']}}</td>
-         <td>{{review['Name']}}</td>
-         <td>{{review['Rating']}}</td>
-         <td>{{review['CommentHead']}}</td>
-         <td>{{review['Comment']}} </td>
-       {% endfor %}
-   </table>
+  <!-- Table Wrapper with padding -->
+  <div class="bg-white shadow-lg rounded-lg p-4 overflow-x-auto">
+    <table id="reviewsTable" class="min-w-full divide-y divide-gray-200 display">
+      <thead class="bg-sky-600 text-white">
+        <tr>
+          <th class="px-6 py-3 text-left">Product</th>
+          <th class="px-6 py-3 text-left">Name</th>
+          <th class="px-6 py-3 text-left">Rating</th>
+          <th class="px-6 py-3 text-left">Comment Head</th>
+          <th class="px-6 py-3 text-left">Comment</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% for review in reviews %}
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-6 py-4 text-sm">{{ review['Product'] }}</td>
+          <td class="px-6 py-4 text-sm">{{ review['Name'] }}</td>
+          <td class="px-6 py-4 text-sm">{{ review['Rating'] }}</td>
+          <td class="px-6 py-4 text-sm">{{ review['CommentHead'] }}</td>
+          <td class="px-6 py-4 text-sm">{{ review['Comment'] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
+<!-- Initialize DataTables with Buttons -->
+<script>
+$('#reviewsTable').DataTable({
+    dom: "<'flex flex-col sm:flex-row justify-between items-center mb-4'Bf>" +
+         "<'overflow-x-auto't>" +
+         "<'flex flex-col sm:flex-row justify-between items-center mt-4'i p-2'p>",
+    responsive: true,
+    buttons: [
+        { extend: 'copy', text: 'Copy' },
+        { extend: 'csv', text: 'CSV' },
+        { extend: 'excel', text: 'Excel' },
+        { extend: 'pdf', text: 'PDF' },
+        { extend: 'print', text: 'Print' }
+    ],
+    paging: true,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: false,
+    initComplete: function() {
+        // Tailwind styling for buttons
+        $('.dt-button').addClass('px-3 py-1 rounded text-white bg-sky-600 hover:bg-sky-700 mr-2 mb-2');
+        $('.dt-button:contains("Copy")').removeClass('bg-sky-600').addClass('bg-red-600');
+
+        // Tailwind styling for search input
+        $('.dataTables_filter input').addClass('border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-sky-500');
+        
+        // Tailwind styling for pagination
+        $('.dataTables_paginate').addClass('flex gap-2 mt-2');
+        $('.dataTables_info').addClass('text-gray-600 mt-2');
+    }
+});
+
+</script>
 
 
-</body>
 
-</html>
+{% endblock %}
