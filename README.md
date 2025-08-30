@@ -31,8 +31,7 @@ It allows users to:
 ---
 
 ## ✨ Features
-- 🔍 Search and scrape images automatically.  
-- 📂 Stores data in **MongoDB Atlas (Cloud Database)**.  
+- 🔍 Search and scrape review automatically.  
 - 🌐 Deployed on **Azure Web App**.  
 - 🎨 User-friendly UI with **HTML + CSS + DataTables**.  
 - 🖥️ Works both locally and on the cloud.  
