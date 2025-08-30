@@ -13,6 +13,7 @@ The project is also deployed on **Azure App Service**.
 ## 📸 Screenshot
 ### 🔹 Homepage
 <img width="1918" height="875" alt="image" src="https://github.com/user-attachments/assets/39d161d9-72b2-4a33-a3f2-92057bb1473e" />
+
 ### 🔹 Results Page
 <img width="1885" height="870" alt="image" src="https://github.com/user-attachments/assets/2a32ada5-b57e-4315-9a56-7b7a2032e290" />
 
