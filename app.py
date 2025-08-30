@@ -58,6 +58,7 @@ def index():
             fw = open(filename, "w")
             headers = "Product, Customer Name, Rating, Heading, Comment \n"
             fw.write(headers)
+            fw.close()
             reviews = []
             for commentbox in commentboxes:
                 try:
@@ -91,7 +92,17 @@ def index():
                 mydict = {"Product": searchString, "Name": name, "Rating": rating, "CommentHead": commentHead,
                           "Comment": custComment}
                 reviews.append(mydict)
+                try:
+                    fw = open(filename, "a")
+                    fw.write(f"{searchString},{name},{rating},{commentHead},{custComment} \n")
+                    fw.close()
+                    # write code here
+                except Exception as e:
+                    print("Exception while writing to csv: ", e)
+
+
             return render_template('results.html', reviews=reviews[0:(len(reviews))])
+
 
         except Exception as e:
             print('The Exception message is: ',e)
