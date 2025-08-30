@@ -10,9 +10,9 @@ idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
-requests==2.24.0
+requests==2.32.3
 six==1.16.0
 soupsieve==2.0.1
-urllib3==1.25.11
+urllib3==2.2.3
 Werkzeug==1.0.1
 pymongo==4.6.3
