@@ -1,55 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- Page title can be overridden in child templates -->
     <title>{% block title %}Web Scraper{% endblock %}</title>
-
     <!-- ✅ Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
     <!-- ✅ FontAwesome Icons via CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- ✅ Custom overrides (keep it minimal, only rare tweaks) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- Extra head content (per-page scripts, meta, etc.) -->
-    {% block head %}{% endblock %}
+    <!-- Extra head content (per-page scripts, meta, etc.) --> {% block head %}{% endblock %}
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans flex flex-col min-h-screen">
 
+<body class="bg-gray-100 text-gray-900 font-sans flex flex-col min-h-screen">
     <!-- 🔹 Navbar -->
     <nav class="bg-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <!-- Left: Project name -->
-            <a href="{{ url_for('index') }}" class="text-xl font-semibold text-sky-600 hover:text-sky-700">
-                Web Scraper
+            <a href="{{ url_for('index') }}" class="text-xl font-semibold text-sky-600 hover:text-sky-700"> Web Scraper
             </a>
-
             <!-- Right: (Optional) GitHub link -->
             <a href="https://github.com/yourusername/your-repo" target="_blank"
-               class="text-gray-600 hover:text-gray-900 text-sm">
-                GitHub Repo
-            </a>
+                class="text-gray-600 hover:text-gray-900 text-sm"> GitHub Repo </a>
         </div>
     </nav>
-
     <!-- 🔹 Main content area -->
-    <main class="flex-grow max-w-7xl mx-auto p-6">
-        {% block body %}{% endblock %}
-    </main>
-
+    <main class="flex-grow max-w-7xl mx-auto p-6"> {% block body %}{% endblock %} </main>
     <!-- 🔹 Footer -->
     <footer class="bg-white border-t mt-8">
-        <div class="max-w-7xl mx-auto px-4 py-4 text-center text-sm text-gray-500">
-            Made with ❤️ by Haidar Ali ·
-            <a href="https://github.com/Haidar440"
-               class="hover:text-sky-600">View on GitHub</a>
+        <div class="max-w-7xl mx-auto px-4 py-4 text-center text-sm text-gray-500"> Made with ❤️ by Haidar Ali · <a
+                href="https://github.com/Haidar440" class="hover:text-sky-600">View on GitHub</a>
         </div>
     </footer>
-
 </body>
+
 </html>

@@ -46,12 +46,13 @@ def index():
         try:
             searchString = request.form['content'].replace(" ","")
             flipkart_url = "https://www.flipkart.com/search?q=" + searchString
-            req = Request(flipkart_url, headers=HEADERS)
-
-            uClient = uReq(req)
-            flipkartPage = uClient.read()
-            uClient.close()
-            flipkart_html = bs(flipkartPage, "html.parser")
+            
+            # Increase connection timeout or rely on Requests which handles redirects/retries properly
+            # using requests over urllib to handle complex headers, timeouts, and connection pooling
+            response = requests.get(flipkart_url, headers=HEADERS, timeout=15)
+            response.raise_for_status()
+            
+            flipkart_html = bs(response.text, "html.parser")
 
             # Find product links directly from <a> tags with href containing /p/ and pid=
             all_links = flipkart_html.find_all("a", href=True)
@@ -96,11 +97,10 @@ def index():
             for page_num in range(1, max_pages + 1):
                 try:
                     review_url = f"{review_base_url}&page={page_num}"
-                    req = Request(review_url, headers=HEADERS)
-                    prodRes = uReq(req)
-                    review_page = prodRes.read()
-                    prodRes.close()
-                    review_html = bs(review_page, "html.parser")
+                    
+                    review_response = requests.get(review_url, headers=HEADERS, timeout=15)
+                    review_response.raise_for_status()
+                    review_html = bs(review_response.text, "html.parser")
 
                     # Extract reviews by finding rating divs (text like "5.0", "4.0", etc.)
                     rating_divs = review_html.find_all('div', string=re.compile(r'^[1-5]\.\d$'))
