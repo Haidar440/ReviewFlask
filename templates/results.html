@@ -199,22 +199,22 @@
     </div>
     <!-- Positive -->
     <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-green-500">
-      <p class="text-sm text-gray-500">Positive 😊</p>
+      <p class="text-sm text-gray-500">Positive <i class="fa-solid fa-face-smile text-green-500 ml-1"></i></p>
       <p class="text-3xl font-bold text-green-600">{{ summary.positive }}</p>
     </div>
     <!-- Neutral -->
     <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-yellow-400">
-      <p class="text-sm text-gray-500">Neutral 😐</p>
+      <p class="text-sm text-gray-500">Neutral <i class="fa-solid fa-face-meh text-yellow-500 ml-1"></i></p>
       <p class="text-3xl font-bold text-yellow-500">{{ summary.neutral }}</p>
     </div>
     <!-- Negative -->
     <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-red-500">
-      <p class="text-sm text-gray-500">Negative 😞</p>
+      <p class="text-sm text-gray-500">Negative <i class="fa-solid fa-face-frown text-red-500 ml-1"></i></p>
       <p class="text-3xl font-bold text-red-600">{{ summary.negative }}</p>
     </div>
     <!-- Avg Polarity -->
     <div class="bg-white shadow rounded-lg p-4 text-center">
-      <p class="text-sm text-gray-500">Avg Polarity</p>
+      <p class="text-sm text-gray-500">Avg Polarity <i class="fa-solid fa-bolt text-blue-500 ml-1"></i></p>
       <p
         class="text-3xl font-bold {% if summary.avg_polarity > 0 %}text-green-600{% elif summary.avg_polarity < 0 %}text-red-600{% else %}text-yellow-500{% endif %}">
         {{ summary.avg_polarity }} </p>
@@ -224,7 +224,7 @@
   <div class="flex justify-center mb-8">
     <a href="{{ url_for('analysis', searchString=searchString) }}"
       class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition shadow-lg text-lg flex items-center gap-2">
-      📊 View Data Visualizations </a>
+      <i class="fa-solid fa-chart-bar"></i> View Data Visualizations </a>
   </div> {% endif %} <!-- Table Wrapper with padding -->
   <div class="bg-white shadow-lg rounded-lg p-4 overflow-x-auto">
     <table id="reviewsTable" class="min-w-full divide-y divide-gray-200 display">
@@ -248,9 +248,10 @@
           <td class="px-6 py-4 text-sm font-semibold
             {% if review['Sentiment'] == 'Positive' %}text-green-600
             {% elif review['Sentiment'] == 'Negative' %}text-red-600
-            {% else %}text-yellow-500{% endif %}"> {% if review['Sentiment'] == 'Positive' %}😊 {% elif
-            review['Sentiment'] == 'Negative' %}😞 {% else %}😐{% endif %} {{ review['Sentiment'] }} ({{
-            review['Polarity'] }}) </td>
+            {% else %}text-yellow-500{% endif %}"> {% if review['Sentiment'] == 'Positive' %}<i
+              class="fa-solid fa-face-smile"></i> {% elif review['Sentiment'] == 'Negative' %}<i
+              class="fa-solid fa-face-frown"></i> {% else %}<i class="fa-solid fa-face-meh"></i>{% endif %} {{
+            review['Sentiment'] }} ({{ review['Polarity'] }}) </td>
         </tr> {% endfor %} </tbody>
     </table>
   </div>
@@ -266,11 +267,11 @@
     pageLength: 10,
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
-      { extend: 'copy', text: '📋 Copy', className: 'dt-btn-copy' },
-      { extend: 'csv', text: '📄 CSV', className: 'dt-btn-csv' },
-      { extend: 'excel', text: '📊 Excel', className: 'dt-btn-excel' },
-      { extend: 'pdf', text: '📕 PDF', className: 'dt-btn-pdf' },
-      { extend: 'print', text: '🖨️ Print', className: 'dt-btn-print' }
+      { extend: 'copy', text: '<i class="fa-solid fa-copy"></i> Copy', className: 'dt-btn-copy' },
+      { extend: 'csv', text: '<i class="fa-solid fa-file-csv"></i> CSV', className: 'dt-btn-csv' },
+      { extend: 'excel', text: '<i class="fa-solid fa-file-excel"></i> Excel', className: 'dt-btn-excel' },
+      { extend: 'pdf', text: '<i class="fa-solid fa-file-pdf"></i> PDF', className: 'dt-btn-pdf' },
+      { extend: 'print', text: '<i class="fa-solid fa-print"></i> Print', className: 'dt-btn-print' }
     ],
     paging: true,
     searching: true,

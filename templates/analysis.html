@@ -20,22 +20,22 @@
         </div>
         <!-- Positive -->
         <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-green-500">
-            <p class="text-sm text-gray-500">Positive 😊</p>
+            <p class="text-sm text-gray-500">Positive <i class="fa-solid fa-face-smile text-green-500 ml-1"></i></p>
             <p class="text-3xl font-bold text-green-600">{{ summary.positive }}</p>
         </div>
         <!-- Neutral -->
         <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-yellow-400">
-            <p class="text-sm text-gray-500">Neutral 😐</p>
+            <p class="text-sm text-gray-500">Neutral <i class="fa-solid fa-face-meh text-yellow-500 ml-1"></i></p>
             <p class="text-3xl font-bold text-yellow-500">{{ summary.neutral }}</p>
         </div>
         <!-- Negative -->
         <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-red-500">
-            <p class="text-sm text-gray-500">Negative 😞</p>
+            <p class="text-sm text-gray-500">Negative <i class="fa-solid fa-face-frown text-red-500 ml-1"></i></p>
             <p class="text-3xl font-bold text-red-600">{{ summary.negative }}</p>
         </div>
         <!-- Avg Polarity -->
         <div class="bg-white shadow rounded-lg p-4 text-center">
-            <p class="text-sm text-gray-500">Avg Polarity</p>
+            <p class="text-sm text-gray-500">Avg Polarity <i class="fa-solid fa-bolt text-blue-500 ml-1"></i></p>
             <p
                 class="text-3xl font-bold {% if summary.avg_polarity > 0 %}text-green-600{% elif summary.avg_polarity < 0 %}text-red-600{% else %}text-yellow-500{% endif %}">
                 {{ summary.avg_polarity }} </p>
