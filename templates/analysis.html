@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %}Data Visualizations - {{ searchString }}{% endblock %} {% block body %} <div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Page Heading -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h2 class="text-2xl font-bold text-gray-700">Analysis for: <span class="text-sky-600">{{ searchString }}</span>
+        </h2>
+        <div class="flex gap-3">
+            <button onclick="history.back()"
+                class="bg-gray-500 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition"> ← Back to Table
+            </button>
+            <a href="{{ url_for('index') }}"
+                class="bg-sky-600 text-white px-5 py-2 rounded-lg hover:bg-sky-700 transition"> New Search </a>
+        </div>
+    </div>
+    <!-- Sentiment Summary Dashboard --> {% if summary %} <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+        <!-- Total Reviews -->
+        <div class="bg-white shadow rounded-lg p-4 text-center">
+            <p class="text-sm text-gray-500">Total Reviews</p>
+            <p class="text-3xl font-bold text-sky-600">{{ summary.total }}</p>
+        </div>
+        <!-- Positive -->
+        <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-green-500">
+            <p class="text-sm text-gray-500">Positive 😊</p>
+            <p class="text-3xl font-bold text-green-600">{{ summary.positive }}</p>
+        </div>
+        <!-- Neutral -->
+        <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-yellow-400">
+            <p class="text-sm text-gray-500">Neutral 😐</p>
+            <p class="text-3xl font-bold text-yellow-500">{{ summary.neutral }}</p>
+        </div>
+        <!-- Negative -->
+        <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-red-500">
+            <p class="text-sm text-gray-500">Negative 😞</p>
+            <p class="text-3xl font-bold text-red-600">{{ summary.negative }}</p>
+        </div>
+        <!-- Avg Polarity -->
+        <div class="bg-white shadow rounded-lg p-4 text-center">
+            <p class="text-sm text-gray-500">Avg Polarity</p>
+            <p
+                class="text-3xl font-bold {% if summary.avg_polarity > 0 %}text-green-600{% elif summary.avg_polarity < 0 %}text-red-600{% else %}text-yellow-500{% endif %}">
+                {{ summary.avg_polarity }} </p>
+        </div>
+    </div> {% endif %} <!-- Matplotlib Visualizations (Large) -->
+    <div class="space-y-8 mb-8"> {% if sentiment_img %} <div
+            class="bg-white shadow-lg rounded-xl p-8 flex flex-col items-center">
+            <h3 class="text-2xl font-bold text-gray-700 mb-6">Sentiment Distribution</h3>
+            <img src="{{ url_for('static', filename=sentiment_img) }}" alt="Sentiment Analysis Chart"
+                class="max-w-full lg:w-3/4 h-auto rounded-lg border border-gray-200 shadow-sm">
+        </div> {% endif %} {% if wordfreq_img %} <div
+            class="bg-white shadow-lg rounded-xl p-8 flex flex-col items-center">
+            <h3 class="text-2xl font-bold text-gray-700 mb-6">Word Frequency (Top 10)</h3>
+            <img src="{{ url_for('static', filename=wordfreq_img) }}" alt="Word Frequency Chart"
+                class="max-w-full lg:w-3/4 h-auto rounded-lg border border-gray-200 shadow-sm">
+        </div> {% endif %} </div>
+</div> {% endblock %}

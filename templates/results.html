@@ -1,46 +1,231 @@
-{% extends "base.html" %}
-
-{% block title %}Scraped Reviews{% endblock %}
-
-{% block head %}
-<!-- DataTables CSS -->
- <!-- DataTables Responsive CSS & JS -->
-
-<!-- jQuery first -->
+{% extends "base.html" %} {% block title %}Scraped Reviews{% endblock %} {% block head %} <!-- jQuery first -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
 <!-- DataTables core -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
 <!-- DataTables Buttons -->
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-
 <!-- JSZip & pdfMake for export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
-<!-- DataTables Responsive last (after jQuery & DataTables) -->
+<!-- DataTables Responsive -->
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<!-- Custom DataTables Styling -->
+<style>
+  /* Hide default DataTables styling conflicts */
+  table.dataTable thead th {
+    border-bottom: none !important;
+  }
 
+  table.dataTable.no-footer {
+    border-bottom: none !important;
+  }
 
-{% endblock %}
+  /* Search / Filter */
+  .dataTables_filter {
+    margin-bottom: 0.5rem;
+  }
 
-{% block body %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  .dataTables_filter label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+    font-weight: 500;
+  }
 
+  .dataTables_filter input {
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .dataTables_filter input:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  }
+
+  /* Length (Show entries) */
+  .dataTables_length {
+    margin-bottom: 0.5rem;
+  }
+
+  .dataTables_length label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+    font-weight: 500;
+  }
+
+  .dataTables_length select {
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .dataTables_length select:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  }
+
+  /* Info text */
+  .dataTables_info {
+    font-size: 0.8rem;
+    color: #6b7280;
+    padding-top: 0.75rem;
+  }
+
+  /* Pagination container */
+  .dataTables_paginate {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding-top: 0.75rem;
+  }
+
+  .dataTables_paginate .paginate_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .dataTables_paginate .paginate_button:hover {
+    background: #0284c7;
+    color: #fff;
+    border-color: #0284c7;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  .dataTables_paginate .paginate_button.current,
+  .dataTables_paginate .paginate_button.current:hover {
+    background: #0284c7 !important;
+    color: #fff !important;
+    border-color: #0369a1 !important;
+    font-weight: 700;
+    box-shadow: 0 1px 4px rgba(2, 132, 199, 0.35);
+  }
+
+  .dataTables_paginate .paginate_button.disabled,
+  .dataTables_paginate .paginate_button.disabled:hover {
+    color: #c4c9d1 !important;
+    background: #f3f4f6 !important;
+    border-color: #e5e7eb !important;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .dataTables_paginate .paginate_button.previous,
+  .dataTables_paginate .paginate_button.next {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Export buttons */
+  .dt-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .dt-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+
+  .dt-button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .dt-button:active {
+    transform: translateY(0);
+  }
+
+  /* Bottom bar layout */
+  .dt-bottom-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style> {% endblock %} {% block body %} <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
   <!-- Page Heading -->
   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
     <h2 class="text-2xl font-bold text-gray-700">Scraped Reviews</h2>
-    <a href="{{ url_for('index') }}"
-       class="bg-sky-600 text-white px-5 py-2 rounded-lg hover:bg-sky-700 transition">
-       ← Back to Search
-    </a>
+    <a href="{{ url_for('index') }}" class="bg-sky-600 text-white px-5 py-2 rounded-lg hover:bg-sky-700 transition"> ←
+      Back to Search </a>
   </div>
-
-  <!-- Table Wrapper with padding -->
+  <!-- Sentiment Summary Dashboard --> {% if summary %} <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+    <!-- Total Reviews -->
+    <div class="bg-white shadow rounded-lg p-4 text-center">
+      <p class="text-sm text-gray-500">Total Reviews</p>
+      <p class="text-3xl font-bold text-sky-600">{{ summary.total }}</p>
+    </div>
+    <!-- Positive -->
+    <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-green-500">
+      <p class="text-sm text-gray-500">Positive 😊</p>
+      <p class="text-3xl font-bold text-green-600">{{ summary.positive }}</p>
+    </div>
+    <!-- Neutral -->
+    <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-yellow-400">
+      <p class="text-sm text-gray-500">Neutral 😐</p>
+      <p class="text-3xl font-bold text-yellow-500">{{ summary.neutral }}</p>
+    </div>
+    <!-- Negative -->
+    <div class="bg-white shadow rounded-lg p-4 text-center border-l-4 border-red-500">
+      <p class="text-sm text-gray-500">Negative 😞</p>
+      <p class="text-3xl font-bold text-red-600">{{ summary.negative }}</p>
+    </div>
+    <!-- Avg Polarity -->
+    <div class="bg-white shadow rounded-lg p-4 text-center">
+      <p class="text-sm text-gray-500">Avg Polarity</p>
+      <p
+        class="text-3xl font-bold {% if summary.avg_polarity > 0 %}text-green-600{% elif summary.avg_polarity < 0 %}text-red-600{% else %}text-yellow-500{% endif %}">
+        {{ summary.avg_polarity }} </p>
+    </div>
+  </div>
+  <!-- Go To Analysis Button -->
+  <div class="flex justify-center mb-8">
+    <a href="{{ url_for('analysis', searchString=searchString) }}"
+      class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition shadow-lg text-lg flex items-center gap-2">
+      📊 View Data Visualizations </a>
+  </div> {% endif %} <!-- Table Wrapper with padding -->
   <div class="bg-white shadow-lg rounded-lg p-4 overflow-x-auto">
     <table id="reviewsTable" class="min-w-full divide-y divide-gray-200 display">
       <thead class="bg-sky-600 text-white">
@@ -50,58 +235,63 @@
           <th class="px-6 py-3 text-left">Rating</th>
           <th class="px-6 py-3 text-left">Comment Head</th>
           <th class="px-6 py-3 text-left">Comment</th>
+          <th class="px-6 py-3 text-left">Sentiment</th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        {% for review in reviews %}
-        <tr class="hover:bg-gray-50 transition">
+      <tbody class="bg-white divide-y divide-gray-200"> {% for review in reviews %} <tr
+          class="hover:bg-gray-50 transition">
           <td class="px-6 py-4 text-sm">{{ review['Product'] }}</td>
           <td class="px-6 py-4 text-sm">{{ review['Name'] }}</td>
           <td class="px-6 py-4 text-sm">{{ review['Rating'] }}</td>
           <td class="px-6 py-4 text-sm">{{ review['CommentHead'] }}</td>
           <td class="px-6 py-4 text-sm">{{ review['Comment'] }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
+          <td class="px-6 py-4 text-sm font-semibold
+            {% if review['Sentiment'] == 'Positive' %}text-green-600
+            {% elif review['Sentiment'] == 'Negative' %}text-red-600
+            {% else %}text-yellow-500{% endif %}"> {% if review['Sentiment'] == 'Positive' %}😊 {% elif
+            review['Sentiment'] == 'Negative' %}😞 {% else %}😐{% endif %} {{ review['Sentiment'] }} ({{
+            review['Polarity'] }}) </td>
+        </tr> {% endfor %} </tbody>
     </table>
   </div>
 </div>
-
 <!-- Initialize DataTables with Buttons -->
 <script>
-$('#reviewsTable').DataTable({
-    dom: "<'flex flex-col sm:flex-row justify-between items-center mb-4'Bf>" +
-         "<'overflow-x-auto't>" +
-         "<'flex flex-col sm:flex-row justify-between items-center mt-4'i p-2'p>",
+  $('#reviewsTable').DataTable({
+    dom: "<'flex flex-col sm:flex-row justify-between items-center gap-3 mb-4'Bf>" +
+      "<'flex flex-col sm:flex-row justify-between items-center gap-3 mb-3'l>" +
+      "<'overflow-x-auto't>" +
+      "<'dt-bottom-bar'ip>",
     responsive: true,
+    pageLength: 10,
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
-        { extend: 'copy', text: 'Copy' },
-        { extend: 'csv', text: 'CSV' },
-        { extend: 'excel', text: 'Excel' },
-        { extend: 'pdf', text: 'PDF' },
-        { extend: 'print', text: 'Print' }
+      { extend: 'copy', text: '📋 Copy', className: 'dt-btn-copy' },
+      { extend: 'csv', text: '📄 CSV', className: 'dt-btn-csv' },
+      { extend: 'excel', text: '📊 Excel', className: 'dt-btn-excel' },
+      { extend: 'pdf', text: '📕 PDF', className: 'dt-btn-pdf' },
+      { extend: 'print', text: '🖨️ Print', className: 'dt-btn-print' }
     ],
     paging: true,
     searching: true,
     ordering: true,
     info: true,
     autoWidth: false,
-    initComplete: function() {
-        // Tailwind styling for buttons
-        $('.dt-button').addClass('px-3 py-1 rounded text-white bg-sky-600 hover:bg-sky-700 mr-2 mb-2');
-        $('.dt-button:contains("Copy")').removeClass('bg-sky-600').addClass('bg-red-600');
-
-        // Tailwind styling for search input
-        $('.dataTables_filter input').addClass('border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-sky-500');
-        
-        // Tailwind styling for pagination
-        $('.dataTables_paginate').addClass('flex gap-2 mt-2');
-        $('.dataTables_info').addClass('text-gray-600 mt-2');
+    language: {
+      search: "🔍 Search:",
+      lengthMenu: "Show _MENU_ entries",
+      info: "Showing _START_ to _END_ of _TOTAL_ reviews",
+      infoEmpty: "No reviews found",
+      infoFiltered: "(filtered from _MAX_ total)",
+      paginate: { previous: "← Prev", next: "Next →" }
+    },
+    initComplete: function () {
+      // Color-code export buttons
+      $('.dt-btn-copy').css({ background: '#6366f1' }); // indigo
+      $('.dt-btn-csv').css({ background: '#0284c7' }); // sky
+      $('.dt-btn-excel').css({ background: '#16a34a' }); // green
+      $('.dt-btn-pdf').css({ background: '#dc2626' }); // red
+      $('.dt-btn-print').css({ background: '#7c3aed' }); // violet
     }
-});
-
-</script>
-
-
-
-{% endblock %}
+  });
+</script> {% endblock %}
