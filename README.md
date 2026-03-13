@@ -3,13 +3,6 @@
 A **Flask + Selenium-based Web Scraper** that fetches images from the web based on user queries and displays them in a clean UI.  
 The project is also deployed on **Azure App Service**.
 
----
-
-## 🔗 Project Link
-👉 [Live Demo on Azure](https://scapper-bye5cuhhcjgpaub2.canadacentral-01.azurewebsites.net/)
-
----
-
 ## 📸 Screenshot
 ### 🔹 Homepage
 <img width="1918" height="875" alt="image" src="https://github.com/user-attachments/assets/39d161d9-72b2-4a33-a3f2-92057bb1473e" />
